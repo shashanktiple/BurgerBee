@@ -2,9 +2,9 @@ import json
 
 burger_sizes = ['single', 'double', 'triple']
 burger_franchises = ['burger king', 'habbit burger', 'mc donald']
-best_burger_types = ['plain', 'cheese', 'bacon']
-burger_palace_types = ['egg', 'pickle', 'tomatoe']
-flaming_burger_types = ['chilli', 'jalapeno', 'peppercorn']
+burger_king_types = ['plain', 'cheese', 'bacon']
+habbit_burger_types = ['egg', 'pickle', 'tomatoe']
+mc_donald_types = ['chili', 'jalapeno', 'peppercorn']
 
 
 def validate_order(slots):
@@ -50,38 +50,42 @@ def validate_order(slots):
 
         return {
             'isValid': False,
-            'invalidSlot': 'BurgerType'
+            'invalidSlot': 'BurgerType',
+            'invalidFranchise': ''
         }
 
     # Validate BurgerType for BurgerFranchise
     if slots['BurgerFranchise']['value']['originalValue'].lower() == 'burger king':
-        if slots['BurgerType']['value']['originalValue'].lower() not in best_burger_types:
+        if slots['BurgerType']['value']['originalValue'].lower() not in burger_king_types:
             print('Invalid BurgerType for burger king')
 
             return {
                 'isValid': False,
                 'invalidSlot': 'BurgerType',
-                'message': 'Would you like to add? {}.'.format(", ".join(best_burger_types))
-            }
-
-    if slots['BurgerFranchise']['value']['originalValue'].lower() == 'mc donald':
-        if slots['BurgerType']['value']['originalValue'].lower() not in burger_palace_types:
-            print('Invalid BurgerType for mc donald')
-
-            return {
-                'isValid': False,
-                'invalidSlot': 'BurgerType',
-                'message': 'Would you like to add? {}.'.format(", ".join(burger_palace_types))
+                'invalidFranchise': 'burger_king',
+                'message': 'Please select a burger king type of {}.'.format(", ".join(burger_king_types))
             }
 
     if slots['BurgerFranchise']['value']['originalValue'].lower() == 'habbit burger':
-        if slots['BurgerType']['value']['originalValue'].lower() not in flaming_burger_types:
+        if slots['BurgerType']['value']['originalValue'].lower() not in habbit_burger_types:
             print('Invalid BurgerType for habbit burger')
 
             return {
                 'isValid': False,
                 'invalidSlot': 'BurgerType',
-                'message': 'Would you like to add? {}.'.format(", ".join(flaming_burger_types))
+                'invalidFranchise': 'habbit_burger',
+                'message': 'Please select a habbit burger type of {}.'.format(", ".join(habbit_burger_types))
+            }
+
+    if slots['BurgerFranchise']['value']['originalValue'].lower() == 'mc donald':
+        if slots['BurgerType']['value']['originalValue'].lower() not in mc_donald_types:
+            print('Invalid BurgerType for mc donald')
+
+            return {
+                'isValid': False,
+                'invalidSlot': 'BurgerType',
+                'invalidFranchise': 'mc_donald',
+                'message': 'Please select a mc donald type of {}.'.format(", ".join(mc_donald_types))
             }
 
     # Valid Order
@@ -96,41 +100,159 @@ def lambda_handler(event, context):
     intent = event['sessionState']['intent']['name']
 
     order_validation_result = validate_order(slots)
+    print(order_validation_result)
 
     if event['invocationSource'] == 'DialogCodeHook':
         if not order_validation_result['isValid']:
+            response_message = 'BurgerBee'
             if 'message' in order_validation_result:
-                response = {
-                    "sessionState": {
-                        "dialogAction": {
-                            "slotToElicit": order_validation_result['invalidSlot'],
-                            "type": "ElicitSlot"
-                        },
-                        "intent": {
-                            "name": intent,
-                            "slots": slots
-                        }
+                response_message = order_validation_result['message']
+
+            response_card_sub_title = ''
+            response_card_buttons = []
+
+            burger_king_sub_title = 'Please select a burger king type'
+            burger_king_buttons = [
+                {
+                    "text": "Plain",
+                    "value": "plain"
+                },
+                {
+                    "text": "Cheese",
+                    "value": "cheese"
+                },
+                {
+                    "text": "Bacon",
+                    "value": "bacon"
+                }
+            ]
+
+            habbit_burger_sub_title = 'Please select a habbit burger type'
+            habbit_burger_buttons = [
+                {
+                    "text": "egg",
+                    "value": "egg"
+                },
+                {
+                    "text": "pickle",
+                    "value": "pickle"
+                },
+                {
+                    "text": "tomatoe",
+                    "value": "tomatoe"
+                }
+            ]
+
+            mc_donald_sub_title = 'Please select a mc donald type'
+            mc_donald_buttons = [
+                {
+                    "text": "Chili",
+                    "value": "chili"
+                },
+                {
+                    "text": "Jalapeno",
+                    "value": "jalapeno"
+                },
+                {
+                    "text": "Peppercorn",
+                    "value": "peppercorn"
+                }
+            ]
+
+            if order_validation_result['invalidSlot'] == "BurgerSize":
+                response_card_sub_title = "Please select a Burger size"
+                response_card_buttons = [
+                    {
+                        "text": "Single",
+                        "value": "single"
                     },
-                    "messages": [
+                    {
+                        "text": "Double",
+                        "value": "double"
+                    },
+                    {
+                        "text": "Triple",
+                        "value": "triple"
+                    }
+                ]
+
+            if order_validation_result['invalidSlot'] == "BurgerFranchise":
+                response_card_sub_title = "Please select a Burger Franchise"
+                response_card_buttons = [
+                    {
+                        "text": "Burger King",
+                        "value": "burger king"
+                    },
+                    {
+                        "text": "Habbit Burger",
+                        "value": "habbit burger"
+                    },
+                    {
+                        "text": "Mc Donald",
+                        "value": "mc donald"
+                    }
+                ]
+
+            if order_validation_result['invalidSlot'] == "BurgerType":
+                if order_validation_result['invalidFranchise'] == "burger_king":
+                    response_card_sub_title = burger_king_sub_title
+                    response_card_buttons = burger_king_buttons
+                elif order_validation_result['invalidFranchise'] == "habbit_burger":
+                    response_card_sub_title = habbit_burger_sub_title
+                    response_card_buttons = habbit_burger_buttons
+                elif order_validation_result['invalidFranchise'] == "mc_donald":
+                    response_card_sub_title = mc_donald_sub_title
+                    response_card_buttons = mc_donald_buttons
+                else:
+                    response_card_sub_title = 'Please select a burger type'
+                    response_card_buttons = [
                         {
-                            "contentType": "PlainText",
-                            "content": order_validation_result['message']
+                            "text": "Plain",
+                            "value": "plain"
+                        },
+                        {
+                            "text": "Cheese",
+                            "value": "cheese"
+                        },
+                        {
+                            "text": "Bacon",
+                            "value": "bacon"
+                        }
+                        ,
+                        {
+                            "text": "pickle",
+                            "value": "pickle"
+                        },
+                        {
+                            "text": "Chili",
+                            "value": "chili"
                         }
                     ]
-                }
-            else:
-                response = {
-                    "sessionState": {
-                        "dialogAction": {
-                            "slotToElicit": order_validation_result['invalidSlot'],
-                            "type": "ElicitSlot"
-                        },
-                        "intent": {
-                            "name": intent,
-                            "slots": slots
+
+            response = {
+                "sessionState": {
+                    "dialogAction": {
+                        "slotToElicit": order_validation_result['invalidSlot'],
+                        "type": "ElicitSlot"
+                    },
+                    "intent": {
+                        "name": intent,
+                        "slots": slots,
+                    }
+                },
+                "messages": [
+                    {
+                        "contentType": "ImageResponseCard",
+                        "content": response_message,
+                        "imageResponseCard": {
+                            "title": "BurgerBee",
+                            "subtitle": response_card_sub_title,
+                            "imageUrl": "YOUR_IMAGE_URL_HERE",
+                            "buttons": response_card_buttons
                         }
                     }
-                }
+                ]
+            }
         else:
             response = {
                 "sessionState": {
@@ -155,12 +277,11 @@ def lambda_handler(event, context):
                     "slots": slots,
                     "state": "Fulfilled"
                 }
-
             },
             "messages": [
                 {
                     "contentType": "PlainText",
-                    "content": "Yey! Your order is confirmed."
+                    "content": "I've placed your order."
                 }
             ]
         }
