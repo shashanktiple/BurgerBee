@@ -1,8 +1,11 @@
 # BurgerBee
-Amazon Lex chatbot integrated with Facebook Messenger.
-<img width="784" alt="Screenshot 2024-04-25 at 14 03 57" src="https://github.com/shashanktiple/BurgerBee/assets/23289378/32b79a89-cda7-41e8-b9f7-25fa769487b7">
+Amazon Lex chatbot integrated on a webpage.
 
-<img width="1087" alt="Screenshot 2024-04-25 at 12 42 01" src="https://github.com/shashanktiple/BurgerBee/assets/23289378/e7837d82-9860-4332-adbc-2af67ed24505">
+<img width="1430" alt="Screenshot 2024-04-30 at 21 55 56" src="https://github.com/shashanktiple/BurgerBee/assets/23289378/c2092d61-867a-40af-a022-3c7bf05694d6">
+<img width="523" alt="Screenshot 2024-04-30 at 22 00 36" src="https://github.com/shashanktiple/BurgerBee/assets/23289378/9029f8cf-7264-4b81-a9a0-b2b8dbffd463">
+
+
+
 
 1. Create a bot in Amazon Lex, and integrate with all the functionality as required.
 2. Create Lambda and integrate it with the lex bot.
