@@ -8,6 +8,15 @@ Amazon Lex chatbot integrated with Facebook Messenger.
 2. Create Lambda and integrate it with the lex bot.
 3. Test the bot for correct functionality.
 4. Check the CouldWatch for all the logs.
+5. Integrate Lex with "kommunicate.io"
+6. add the script to a simple web page
+7. and host it to S3
+
+
+
+
+
+========= OLD Project ==========
 5. Build a Facebook App alongside creating a Facebook page for implementing the messenger on the Facebook page.
 6. Integrate Facebook Messenger with the bot with the webhook.
 
