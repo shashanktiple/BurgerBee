@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BUrgerBee</title>
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
+    <script type="text/javascript">
+      (function (d, m) {
+        var kommunicateSettings = {
+          appId: "1938b3524db4e441e575cbdf48723ad04",
+          popupWidget: true,
+          automaticChatOpenOnNavigation: true,
+        };
+        var s = document.createElement("script");
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://widget.kommunicate.io/v2/kommunicate.app";
+        var h = document.getElementsByTagName("head")[0];
+        h.appendChild(s);
+        window.kommunicate = m;
+        m._globals = kommunicateSettings;
+      })(document, window.kommunicate || {});
+      /* NOTE : Use web server to view HTML files as real-time update will not work if you directly open the HTML file in the browser. */
+    </script>
+  </head>
+  <body>
+    <h1>
+      To order please type <br />
+      I'd like to order a burger <br /><b>OR</b><br />order burger
+    </h1>
+    <h3><u>Menu</u></h3>
+    <ul>
+      <li>
+        <b>Burger King</b>
+        <ul>
+          <li>Bacon</li>
+          <li>Cheese</li>
+          <li>Plain</li>
+        </ul>
+      </li>
+      <br />
+      <li>
+        <b>Habbit Burger</b>
+        <ul>
+          <li>Egg</li>
+          <li>Tomatoe</li>
+          <li>Pickle</li>
+        </ul>
+      </li>
+      <br />
+      <li>
+        <b>Mc Donald</b>
+        <ul>
+          <li>Chili</li>
+          <li>Jalapeno</li>
+          <li>Peppercorn</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h3>Burger Sizes (# patties)</h3>
+    <ul>
+      <li>Single</li>
+      <li>Double</li>
+      <li>Triple</li>
+    </ul>
+
+    <hr />
+  </body>
+</html>
