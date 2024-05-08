@@ -1,6 +1,7 @@
 # BurgerBee
 Web link:  https://burgerbee.s3.amazonaws.com/index.html
-![Screenshot 2024-04-25 at 14 03 57](https://github.com/shashanktiple/BurgerBee/assets/23289378/8a06eae3-cd56-4645-a56c-685ab7feec4d)
+
+![Screenshot 2024-04-25 at 14 03 57](https://github.com/shashanktiple/BurgerBee/assets/23289378/35d1acd6-2542-4a3a-8260-811c22912607)
 
 <img width="1430" alt="Screenshot 2024-04-30 at 21 55 56" src="https://github.com/shashanktiple/BurgerBee/assets/23289378/c2092d61-867a-40af-a022-3c7bf05694d6">
 
